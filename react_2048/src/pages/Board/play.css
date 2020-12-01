@@ -1,0 +1,147 @@
+header{
+	width: 100%;display:block ;text-align: center;
+}
+
+
+.game{
+	margin-top: 50px;
+		display: flex;
+		flex-direction: row;
+		-webkit-flex-direction: row;
+		height: 500px;
+		width: 500px;
+		background: #bbada0;
+		flex-wrap:wrap;
+		-webkit-flex-wrap:wrap;
+		padding: 20px;
+		justify-content: center;
+		align-items: center; 
+		border-radius: 10px;
+		margin: 0 auto;
+		
+}
+.gride-cell{
+     width: 90px;
+	    height: 90px;
+	    font-size: 40px;
+	    line-height: 80px;
+	    /* border: 1px solid black; */
+	    border-radius: 10px;
+		text-align: center;
+		
+		background: #ccc0b3;
+		align-items:flex-start;
+		margin: 10px;
+
+}
+.game_smell{
+		display: flex;
+		flex-direction: row;
+		-webkit-flex-direction: row;
+		height: 160px;
+		width: 160px;
+		background: #bbada0;
+		flex-wrap:wrap;
+		-webkit-flex-wrap:wrap;
+		align-items: center; 
+		justify-content: center;
+		border-radius: 10px;
+		padding: 5px;
+		margin: 0 auto;
+}
+.gride-cell-smell{
+     width: 30px;
+	    height: 30px;
+	    font-size: 20px;
+	    line-height: 30px;
+	    /* border: 1px solid black; */
+	    border-radius: 5px;
+	    text-align: center;
+		background: #ccc0b3;
+		align-items:flex-start;
+		margin: 2px;
+		
+}
+.n0{
+    background: #ccc0b3;
+	
+}
+ .n2
+{
+	background: #eee4da;
+
+    color: #7c736a;
+}
+ .n4
+{
+    color: #7c736a;
+    background: #ece0c8;animation: mymove 0.5s;
+
+    color: #7c736a;
+}
+ .n8
+{
+    color: #fff7eb;
+    background: #f2b179;animation: mymove 0.5s;
+}
+ .n16
+{
+    color:#fff7eb;
+    background:#f59563;animation: mymove 0.5s;
+  -moz-animation: mymove 0.5s; /* Firefox */
+  -webkit-animation: mymove 0.5s; /* Safari 和 Chrome */
+  -o-animation: mymove 0.5s; /* Opera */
+}
+ .n32
+{
+    color:#fff7eb;
+    background:#f57c5f;animation: mymove 0.5s;
+  -moz-animation: mymove 0.5s; /* Firefox */
+  -webkit-animation: mymove 0.5s; /* Safari 和 Chrome */
+  -o-animation: mymove 0.5s; /* Opera */
+}
+ .n64
+{
+    color:#fff7eb;
+    background:#f65d3b;animation: mymove 0.5s;
+  -moz-animation: mymove 0.5s; /* Firefox */
+  -webkit-animation: mymove 0.5s; /* Safari 和 Chrome */
+  -o-animation: mymove 0.5s; /* Opera */
+}
+ .n128
+{
+    color:#fff7eb;
+    background:#edce71;animation: mymove 0.5s;
+  -moz-animation: mymove 0.5s; /* Firefox */
+  -webkit-animation: mymove 0.5s; /* Safari 和 Chrome */
+  -o-animation: mymove 0.5s; /* Opera */
+}
+ .n256
+{
+    color:#fff7eb;
+    background:#edcc61;animation: mymove 0.5s;
+  -moz-animation: mymove 0.5s; /* Firefox */
+  -webkit-animation: mymove 0.5s; /* Safari 和 Chrome */
+  -o-animation: mymove 0.5s; /* Opera */
+}
+ .n512
+{
+    color:#fff7eb;
+    background:#ecc850;animation: mymove 0.5s;
+  -moz-animation: mymove 0.5s; /* Firefox */
+  -webkit-animation: mymove 0.5s; /* Safari 和 Chrome */
+  -o-animation: mymove 0.5s; /* Opera */
+}
+ .n1024
+{
+    color:#fff7eb;
+    background:#edc53f;animation: mymove 0.5s;
+  -moz-animation: mymove 0.5s; /* Firefox */
+  -webkit-animation: mymove 0.5s; /* Safari 和 Chrome */
+  -o-animation: mymove 0.5s; /* Opera */
+}
+ .n2048
+{
+    color:#fff7eb;
+    background:#eec22e;
+}
