@@ -6,7 +6,7 @@
  * @Description: In User Settings Edit
  * @FilePath: \src\store\index.js
  */
-import { createStore, applyMiddleware, compose} from 'redux';
+import { createStore, applyMiddleware} from 'redux';
 import reduxWebsocket from '@giantmachines/redux-websocket';
 import { reducer } from '../reducer';
 const reduxWebsocketMiddleware = reduxWebsocket();

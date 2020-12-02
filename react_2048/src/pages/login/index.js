@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-11-25 23:38:32
- * @LastEditTime: 2020-11-27 10:40:39
+ * @LastEditTime: 2020-12-02 16:39:35
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \src\login\index.js
@@ -11,6 +11,7 @@ import React from 'react'
 import store from '../../store'
 import {connect} from '@giantmachines/redux-websocket';
 import Home from '../home';
+import '../login/login.css'
 
 export default class Login extends React.Component {
     constructor(props) {
@@ -32,13 +33,22 @@ export default class Login extends React.Component {
 
         return (
             <>
-                <label>用户姓名 </label>
-                <input id="in_user_name" value={this.state.username} onChange={(e) => {
+               <div className="mainbody middle">
+                    
+                <form className="form-box multiplayer">
+                <div id="gametitle" style={{color:'white'}}>2048</div>
+                <div>
+                    <input className="input-normal" placeholder="请输入用户名" value={this.state.username} type="text" onChange={(e) => {
                     this.setState({
                         username: e.target.value,
                     });
-                }}/>
-                <button id="user_join" onClick={this.handleClick}>进入游戏大厅</button>
+                }} />
+                    <button className="btn-submit" type="submit" onClick={this.handleClick}>
+                    开始游戏
+                    </button>
+                </div>      
+                </form>
+                </div>
             </>
         );
     }

@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-11-25 17:25:27
- * @LastEditTime: 2020-11-27 01:55:12
+ * @LastEditTime: 2020-12-02 16:34:46
  * @LastEditors: Please set LastEditors
  * @Description: 房间组件，一个房间四个人
  * @FilePath: \src\pages\Room\index.js
@@ -43,7 +43,7 @@ export default class Room extends React.Component {
                             avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"/>}
                             title={<a href="https://ant.design">{item.username}</a>}
 
-                            description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+                            description={"当前分数"+item.score}
                         />
                     </List.Item>
                 )}

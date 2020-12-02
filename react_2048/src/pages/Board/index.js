@@ -34,7 +34,7 @@ export default class Board extends React.Component {
     }
 
     render() {
-        console.log('Board', this.props.current);
+
         return (
             <div className="main">
                 <header>

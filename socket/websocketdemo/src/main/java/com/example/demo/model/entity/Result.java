@@ -8,7 +8,8 @@ public class Result {
         Rooms,//返回房间数
         USERINFO, //返回用户信息
         START, //开始游戏标志
-        RoomInfo //返回房间信息
+        RoomInfo, //返回房间信息
+        TempInfo
     }
 
     public Type getType() {

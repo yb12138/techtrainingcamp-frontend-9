@@ -83,6 +83,13 @@ public class ChatRoomServerEndpoint {
                         Long roomID = jsonObject.getLong("roomID");
                         WebSocketUtils.updateCurrent(username,current,score,roomID);
                     }
+                    break;
+                case LEAVE:
+                        WebSocketUtils.exitGame(username);
+                    break;
+                case GetInfo:
+                    WebSocketUtils.sendUserInfo(username);
+                    break;
                 default:
             }
         }

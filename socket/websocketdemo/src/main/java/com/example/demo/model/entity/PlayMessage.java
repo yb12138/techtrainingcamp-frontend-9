@@ -11,7 +11,7 @@ public class PlayMessage implements Serializable {
     public enum MessageType {
         UPLOAD,//上传自身数据
         VIEW_ROOM,//查看房间信息
-        VIEW_PLAYERS,//查看当前房间玩家游戏状况
+        GetInfo,//查看当前房间玩家游戏状况
         LEAVE, //退出连接
         IN_ROOM,//加入房间
         Start //该玩家已准备

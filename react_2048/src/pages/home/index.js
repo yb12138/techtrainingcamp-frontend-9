@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-11-24 20:52:26
- * @LastEditTime: 2020-11-27 00:47:56
+ * @LastEditTime: 2020-12-02 16:37:33
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \src\pages\home\index.js
@@ -13,14 +13,19 @@ import {connect} from 'react-redux';
 import {Col, Row} from 'antd';
 import 'antd/dist/antd.css';
 import Room from '../../pages/Room';
+import { Layout } from 'antd';
+
+const { Header, Content } = Layout;
 
 class Home extends React.Component {
 
 
     render() {
         const status = this.props.status;
-        if (status == "IN_GAME") {
+        if (status === "IN_GAME") {
+            console.log("出发了");
             this.props.history.push('/play');
+            
         }
         console.log("Home:", this.props);
         const rooms = this.props.rooms;
@@ -28,6 +33,8 @@ class Home extends React.Component {
 
         return (
             <>
+                <Header >
+                    <h1 style={{color:'white'}}> 游戏大厅</h1></Header>
                 <Row gutter={16}>
                     {
                         rooms.map((v, i) => {

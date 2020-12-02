@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2020-12-02 10:17:48
+ * @LastEditTime: 2020-12-02 16:47:41
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \src\pages\PlayerList\index.js
+ */
 import React from 'react'
 import {Row, Col, List} from 'antd';
 import SmellBoard from '../SmellBoard';
@@ -26,7 +34,7 @@ export default class PlayerList extends React.Component {
             title = '房间内其余玩家情况';
             content = (otherplays.map((v, i) => {
                 return <Col span={12}>
-                    <SmellBoard style="text-align: center;" current={v.current} score={v.score}></SmellBoard>
+                    <SmellBoard style="text-align: center;" current={v.current} score={v.score} username={v.username}></SmellBoard>
                 </Col>
             }));
         } else {

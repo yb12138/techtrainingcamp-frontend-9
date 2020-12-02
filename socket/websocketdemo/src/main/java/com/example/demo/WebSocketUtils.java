@@ -25,6 +25,7 @@ import static com.example.demo.model.enums.StatusEnum.IN_GAME;
 public class WebSocketUtils {
     // 创建一个集合，里面存放所有的在线用户
     public static final Map<String, Player> ONLINE_USER_SESSIONS = new ConcurrentHashMap<>();
+    public static final Map<String, PlayRoom> ONLINE_USER_ROOMS = new ConcurrentHashMap<>();
     public static final List<PlayRoom> rooms=new CopyOnWriteArrayList<>();
 
     public static final Map<String,List<String>> room_user=new ConcurrentHashMap<>();
@@ -78,20 +79,23 @@ public class WebSocketUtils {
             return;
         }
         for (PlayRoom playRoom:rooms){
-            if (playRoom.getRoomId()==RoomID){
-                List<Player> players=playRoom.getPlayerList();
-                for (Player player:players){
-                    if (player.getUsername().equals(username)){
-                       return ;  //该用户断线重连，无需操作
+                if (playRoom.getRoomId()==RoomID){
+                    List<Player> players=playRoom.getPlayerList();
+                    for (Player player:players){
+                        if (player.getUsername().equals(username)){
+                            ONLINE_USER_ROOMS.put(username,playRoom);
+                            return ;  //该用户断线重连，无需操作
+                        }
                     }
+                    user.setStatus(IN_GAME);
+                    user.setCurrent(new int[4][4]);
+                    user.setScore(0.0);
+                    user.setRoomID(RoomID);
+                    players.add(user);
+                    playRoom.setPlayerList(players);
+                    ONLINE_USER_ROOMS.put(username,playRoom);
+                    break;
                 }
-                user.setStatus(IN_GAME);
-                user.setCurrent(new int[4][4]);
-                user.setScore(0.0);
-                user.setRoomID(RoomID);
-                players.add(user);
-                playRoom.setPlayerList(players);
-            }
         }
         sendAllRoom();
         updateUserInfo(user);
@@ -101,6 +105,10 @@ public class WebSocketUtils {
         if(user==null||user.getSession()==null){
             return;
         }
+        sendUserInfo(user);
+    }
+
+    private static void sendUserInfo(Player user) {
         Player data=new Player();
         data.setScore(user.getScore());
         data.setCurrent(user.getCurrent());
@@ -108,7 +116,7 @@ public class WebSocketUtils {
         data.setStatus(user.getStatus());
         data.setUserid(user.getUserid());
         data.setRoomID(user.getRoomID());
-        Result result=new Result(Result.Type.USERINFO,JSON.toJSONString(data));
+        Result result=new Result(Result.Type.USERINFO, JSON.toJSONString(data));
         sendMessage(user.getSession(),JSON.toJSONString(result));
     }
 
@@ -201,5 +209,38 @@ public class WebSocketUtils {
         temp.setWinner(playRoom.getWinner());
         temp.setMaxScore(playRoom.getMaxScore());
         temp.setActualPlayerNumber(playRoom.getActualPlayerNumber());
+    }
+
+    public static void exitGame( String username) {
+        PlayRoom playRoom=ONLINE_USER_ROOMS.get(username);
+        if(playRoom==null){
+            return;
+        }
+        List<PlayRoom> playRoomList=rooms.stream().filter(item->item.getRoomId()==playRoom.getRoomId()).collect(Collectors.toList());
+        List<Player> players=playRoomList.get(0).getPlayerList();
+        players.removeIf(player -> player.getUsername().equals(username));
+        ONLINE_USER_ROOMS.remove(username);
+        Player player=ONLINE_USER_SESSIONS.get(username);
+        player.setStatus(StatusEnum.ONLINE);
+        player.setRoomID(0);
+        player.setCurrent(null);
+        player.setScore(0);
+        sendUserInfo(player);
+        sendAllRoom();
+    }
+
+    public static void sendUserInfo(String username) {
+        Player player=ONLINE_USER_SESSIONS.get(username);
+        if (player==null||player.getSession()==null){
+            return;
+        }
+        PlayRoom playRoom=ONLINE_USER_ROOMS.get(username);
+        if(playRoom==null){
+            //未加入任何房间，直接返回
+            return;
+        }
+        Result result=new Result(Result.Type.TempInfo,null);
+
+
     }
 }

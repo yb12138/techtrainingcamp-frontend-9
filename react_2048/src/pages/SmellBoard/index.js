@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2020-12-02 10:17:48
+ * @LastEditTime: 2020-12-02 16:47:16
+ * @LastEditors: your name
+ * @Description: In User Settings Edit
+ * @FilePath: \src\pages\SmellBoard\index.js
+ */
 /**
  * 小型Board组件,主要直接供展示使用
  */
@@ -30,7 +38,7 @@ export default class SmellBoard extends React.Component {
     render() {
         return (
             <div>
-                <h5>当前分数{this.props.score}</h5>
+                <h5>{this.props.username} 当前分数 {this.props.score}</h5>
                 <div className="game_smell">
 
                     {this.renderSquare(0, 0)}

@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-11-24 20:47:55
- * @LastEditTime: 2020-11-27 10:32:49
+ * @LastEditTime: 2020-12-02 15:36:54
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \src\App.js
@@ -11,7 +11,7 @@ import {Provider} from 'react-redux';
 import Home from './pages/home';
 import Login from './pages/login';
 import Play from './pages/play';
-import {Router, Route, Link, NavLink, HashRouter} from 'react-router-dom'
+import { Route, HashRouter} from 'react-router-dom'
 
 import store from './store';
 
@@ -23,8 +23,8 @@ function App(props) {
             <Provider store={store}>
                 <div className="App">
                     <Route exact path="/" component={Login}/>
-                    <Route path="/home" component={Home}/>
-                    <Route path="/play" component={Play}/>
+                    <Route  exact path="/home" component={Home}/>
+                    <Route  exact path="/play" component={Play}/>
                 </div>
             </Provider>
         </HashRouter>
