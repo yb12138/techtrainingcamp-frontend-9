@@ -168,16 +168,16 @@ class Play extends React.Component {
         if (countstart) {
             Countcomponent = <Clock />;
         } else {
-            Countcomponent = <div>准备开始</div>;
+            Countcomponent = <h3>准备开始</h3>;
         }
         return (
             <Layout className="layout" style={{height: '100%'}}>
                 <Row justify="center" align="middle">
                     <Col span={12} style={{marginTop: '15px'}}>
-                        <h2 style={{textAlign: 'right', margin: '0'}}>{roomtitle}</h2>
-                         <h4 style={{textAlign: 'right', margin: '0'}}>{Countcomponent}</h4>
-                    </Col>
+                        <button className={"btn btn-3 btn-3b icon-star-2"} style={{textAlign: 'right', margin: '0'}}>{roomtitle}</button>
 
+                    </Col>
+                    <h3 style={{textAlign: 'right', margin: '20px'}}>{Countcomponent}</h3>
                     <Col span={10} style={{textAlign: 'right'}}>
                         <button  className={"btn btn-4 btn-4c icon-arrow-right"} onClick={()=>{this.exitGame(this.props.history)}}>退出房间</button>
                     </Col>
