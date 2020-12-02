@@ -12,6 +12,7 @@ import PlayerList from '../PlayerList';
 import {Divider} from 'antd';
 import CountDown from "../Clock/CountDown";
 import { IdcardFilled } from '@ant-design/icons';
+import Clock from "../Clock/Clock";
 
 
 class Play extends React.Component {
@@ -155,7 +156,7 @@ class Play extends React.Component {
         let start = null;
         switch (this.state.status) {
             case 0:
-                start = (<Button onClick={() => this.sendStart(this.props.roomID)}>准备</Button>)
+                start = (<button className={"btn btn-2 btn-2i"} onClick={() => this.sendStart(this.props.roomID)}>准备 </button>)
                 break;
             case 1:
                 start = (<Button>已准备</Button>)
@@ -163,22 +164,22 @@ class Play extends React.Component {
             default:break;
         }
         const countstart = this.state.countstart;
-        // let Countcomponent;
-        // if (countstart) {
-        //     Countcomponent = <CountDown hours={this.state.hours} seconds={this.state.seconds} minutes={this.state.minutes}/>;
-        // } else {
-        //     Countcomponent = <div>准备开始</div>;
-        // }
+        let Countcomponent;
+        if (countstart) {
+            Countcomponent = <Clock />;
+        } else {
+            Countcomponent = <div>准备开始</div>;
+        }
         return (
             <Layout className="layout" style={{height: '100%'}}>
                 <Row justify="center" align="middle">
                     <Col span={12} style={{marginTop: '15px'}}>
                         <h2 style={{textAlign: 'right', margin: '0'}}>{roomtitle}</h2>
-                        {/* <h4 style={{textAlign: 'right', margin: '0'}}>{Countcomponent}</h4> */}
+                         <h4 style={{textAlign: 'right', margin: '0'}}>{Countcomponent}</h4>
                     </Col>
 
                     <Col span={10} style={{textAlign: 'right'}}>
-                        <Button onClick={()=>{this.exitGame(this.props.history)}}>退出房间</Button>
+                        <button  className={"btn btn-4 btn-4c icon-arrow-right"} onClick={()=>{this.exitGame(this.props.history)}}>退出房间</button>
                     </Col>
                 </Row>
                 <Divider style={{margin: '15px 0 0 0'}}/>

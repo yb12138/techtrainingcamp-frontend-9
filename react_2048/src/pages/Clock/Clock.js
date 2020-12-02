@@ -1,7 +1,7 @@
 import React from 'react'
 
 let waitMinutes = 0;
-let waitSeconds = 3;
+let waitSeconds = 30;
 
 class Clock extends React.Component {
     constructor(props) {
