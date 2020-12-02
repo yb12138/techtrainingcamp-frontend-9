@@ -58,7 +58,7 @@ function CountDown({ hours = 0, minutes = 0, seconds = 0 }) {
                 .padStart(2, "0")}:${time.seconds.toString().padStart(2, "0")}`}</p>
             <div>{over ? "Time's up!" : ""}</div>
             <div>{over ? "Game Over!":""} </div>
-            <button onClick={() => reset()}>Restart</button>
+            {/*<button onClick={() => reset()}>Restart</button>*/}
         </div>
     );
 }

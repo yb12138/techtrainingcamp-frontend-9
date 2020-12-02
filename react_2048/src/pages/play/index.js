@@ -11,6 +11,7 @@ import PlayerList from '../PlayerList';
 
 import {Divider} from 'antd';
 import CountDown from "../Clock/CountDown";
+import Clock from "../Clock/Clock";
 
 
 class Play extends React.Component {
@@ -32,7 +33,15 @@ class Play extends React.Component {
             roomID: 0,
             rank: true,
             countstart: false,
+            isOver: false
         }
+    }
+
+    CheckIfOver(over) {
+        alert(over)
+        this.setState({
+            isOver: over
+        })
     }
 
     componentDidMount() {
@@ -115,7 +124,7 @@ class Play extends React.Component {
                     break;
                 case 'ArrowDown':    //下
                     var temp = Rule.moveDown(this.state.current, this.state.merges, this.state.score);
-                    if (temp.isMove == 1) {
+                    if (temp.isMove === 1) {
                         store.dispatch(send({
                             type: "UPLOAD",
                             content: JSON.stringify({
@@ -155,6 +164,13 @@ class Play extends React.Component {
             isMove: 0,
             countstart: true
         });
+        // if (this.state.isOver === true) {
+        //     alert('2')
+        //     this.setState({
+        //             status: 0
+        //         }
+        //     )
+        // }
     }
 
 
@@ -165,7 +181,7 @@ class Play extends React.Component {
             otherplays = this.props.roomInfo.playerList; //排行榜
         }
 
-        if (this.props.Game_Status === 2 && this.state.flag == 0) {
+        if (this.props.Game_Status === 2 && this.state.flag === 0) {
             this.startGame();
         }
         let start = null;
@@ -180,20 +196,25 @@ class Play extends React.Component {
         const countstart = this.state.countstart;
         let Countcomponent;
         if (countstart) {
-            Countcomponent = <CountDown hours={this.state.hours} seconds={this.state.seconds} minutes={this.state.minutes}/>;
+            Countcomponent = <Clock isOver={this.state.isOver} passValue={(over) => {
+                this.CheckIfOver(over)
+            }}/>
         } else {
             Countcomponent = <div>准备开始</div>;
         }
+
         return (
             <Layout className="layout" style={{height: '100%'}}>
                 <Row justify="center" align="middle">
                     <Col span={12} style={{marginTop: '15px'}}>
-                        <h2 style={{textAlign: 'right', margin: '0'}}>{roomtitle}</h2>
-                        <h4 style={{textAlign: 'right', margin: '0'}}>{Countcomponent}</h4>
-                    </Col>
+                        <h2 style={{textAlign: 'right', margin: '0'}}>
+                            <button className={"btn btn-3 btn-3b icon-star-2"} >{roomtitle}</button></h2>
 
+                    </Col>
+                    <h4 style={{textAlign: 'right', margin: '0'}}>{Countcomponent}</h4>
                     <Col span={10} style={{textAlign: 'right'}}>
                         <button className="btn btn-4 btn-4a icon-arrow-right">退出房间</button>
+                        <h2>{this.state.status}</h2>
                     </Col>
                 </Row>
                 <Divider style={{margin: '15px 0 0 0'}}/>
@@ -208,12 +229,9 @@ class Play extends React.Component {
                             <Board current={this.state.current} score={this.state.score}/>
                             {start}
                         </Col>
-
                     </Row>
                 </Content>
             </Layout>
-
-
         )
     }
 

@@ -19,7 +19,7 @@ class Home extends React.Component {
 
     render() {
         const status = this.props.status;
-        if (status == "IN_GAME") {
+        if (status === "IN_GAME") {
             this.props.history.push('/play');
         }
         console.log("Home:", this.props);
