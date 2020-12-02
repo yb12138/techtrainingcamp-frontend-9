@@ -1,7 +1,7 @@
 import React from 'react'
 
 let waitMinutes = 0;
-let waitSeconds = 30;
+let waitSeconds = 3;
 
 class Clock extends React.Component {
     constructor(props) {
@@ -41,20 +41,18 @@ class Clock extends React.Component {
             this.countDown();
         }, 1000);
     }
-    handlePassValue(){
-        this.props.passValue(this.state.isOver);
+    handlePassValue = () =>{
+        this.props.setParentState(this.state.isOver);
     }
     render() {
-        console.log(this.state.isOver)
+        let {isOver} = this.state.isOver;
         let over = "";
         let value = "";
         if (this.state.isOver === true){
             over = "Time's up!\nGame Over";
-            value = () => this.handlePassValue();
         }
         else{
             over = "";
-            value = "";
         }
 
         return (<div>
@@ -62,7 +60,7 @@ class Clock extends React.Component {
                     .toString()
                     .padStart(2, "0")}:${this.state.seconds.toString().padStart(2, "0")}`}</p>
                 <div>{over}</div>
-                <p>{value}</p>
+                <div>{this.handlePassValue}</div>
             </div>
         )
 
