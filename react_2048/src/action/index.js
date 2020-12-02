@@ -1,4 +1,4 @@
-const { reducer } = require("../reducer");
+const {reducer} = require("../reducer");
 
 /*
  * @Author: your name
@@ -8,13 +8,13 @@ const { reducer } = require("../reducer");
  * @Description: In User Settings Edit
  * @FilePath: \src\action\index.js
  */
-const sendAction =()=>{
-    
-    return{
+const sendAction = () => {
+
+    return {
         type: "send_type",
         value: "我是一个"
     };
 }
-module.exports={
+module.exports = {
     sendAction
 }

@@ -11,25 +11,24 @@ import {Provider} from 'react-redux';
 import Home from './pages/home';
 import Login from './pages/login';
 import Play from './pages/play';
-import { Router, Route, Link , NavLink,HashRouter} from 'react-router-dom'
+import {Router, Route, Link, NavLink, HashRouter} from 'react-router-dom'
 
 import store from './store';
 
 
-
 function App(props) {
-  
-  return (
-    <HashRouter>
-    <Provider store={store}>
-    <div className="App"  >
-        <Route    exact path="/" component={Login} />
-        <Route  path="/home" component={Home} />
-        <Route   path="/play" component={Play} />
-    </div>
-    </Provider>
-    </HashRouter>
-  );
+
+    return (
+        <HashRouter>
+            <Provider store={store}>
+                <div className="App">
+                    <Route exact path="/" component={Login}/>
+                    <Route path="/home" component={Home}/>
+                    <Route path="/play" component={Play}/>
+                </div>
+            </Provider>
+        </HashRouter>
+    );
 }
 
 

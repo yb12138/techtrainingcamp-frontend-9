@@ -3,6 +3,7 @@ package com.example.demo.model.entity;
 public class Result {
     private Type type;
     private String content;
+
     public enum Type {
         Rooms,//返回房间数
         USERINFO, //返回用户信息

@@ -9,37 +9,37 @@
 import React from 'react'
 //导入store
 import store from '../../store'
-import { connect } from '@giantmachines/redux-websocket';
+import {connect} from '@giantmachines/redux-websocket';
 import Home from '../home';
 
-export default class Login extends React.Component{
-    constructor(props){
+export default class Login extends React.Component {
+    constructor(props) {
         super(props);
         this.state = {
             username: ""
-          };
+        };
     }
 
-    handleClick=()=>{
+    handleClick = () => {
         let history = this.props.history;
-        let name=this.state.username;
-        store.dispatch(connect('ws://localhost:8080/chat-room/'+name));
+        let name = this.state.username;
+        store.dispatch(connect('ws://localhost:8080/chat-room/' + name));
         history.push('/home');
-        
+
     };
- 
-    render(){
-       
-        return(
+
+    render() {
+
+        return (
             <>
-            <label >用户姓名 </label>
-            <input id="in_user_name" value={this.state.username}  onChange={(e) => {
-        this.setState({
-            username: e.target.value,
-        });
-    }} />
-            <button id="user_join"  onClick={this.handleClick} >进入游戏大厅</button>
-           </>
+                <label>用户姓名 </label>
+                <input id="in_user_name" value={this.state.username} onChange={(e) => {
+                    this.setState({
+                        username: e.target.value,
+                    });
+                }}/>
+                <button id="user_join" onClick={this.handleClick}>进入游戏大厅</button>
+            </>
         );
-}
+    }
 }

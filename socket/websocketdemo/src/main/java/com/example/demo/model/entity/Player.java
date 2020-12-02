@@ -60,7 +60,7 @@ public class Player implements Serializable {
         this.score = score;
         this.maxScore = maxScore;
         this.status = status;
-        this.session=session;
+        this.session = session;
     }
 
     public Player() {

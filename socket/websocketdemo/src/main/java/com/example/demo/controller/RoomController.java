@@ -16,11 +16,12 @@ import java.util.List;
 public class RoomController {
     /**
      * 获取所有房间信息
+     *
      * @param
      * @return
      */
-    @RequestMapping(value="/list", method= RequestMethod.GET)
-    public List<PlayRoom> sendAllMessage(){
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    public List<PlayRoom> sendAllMessage() {
         return WebSocketUtils.rooms;
     }
 }

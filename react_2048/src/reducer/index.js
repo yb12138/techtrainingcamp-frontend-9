@@ -8,44 +8,49 @@
  * @FilePath: \src\reducer\index.js
  */
 
-const initState={
-    username:null,
-    rooms:[],
-    current:[],
-    roomID:[],
-    roomInfo:null,
-    status:'ONLINE',
-    Game_Status:0,
+const initState = {
+    username: null,
+    rooms: [],
+    current: [],
+    roomID: [],
+    roomInfo: null,
+    status: 'ONLINE',
+    Game_Status: 0,
 }
-exports.reducer=(state=initState,action)=>{
-    switch(action.type){
+exports.reducer = (state = initState, action) => {
+    switch (action.type) {
         case 'add_action':
-            return{
-                count:state.count+1
+            return {
+                count: state.count + 1
             }
         case 'REDUX_WEBSOCKET::CONNECT':
-            console.log("CONNECT",action);
+            console.log("CONNECT", action);
             return state;
         case 'REDUX_WEBSOCKET::SEND':
-            console.log("SEND",action);
+            console.log("SEND", action);
             return state;
-        
+
         case 'REDUX_WEBSOCKET::OPEN':
             return state;
         case 'REDUX_WEBSOCKET::MESSAGE':
-            const data=eval('('+action.payload.message+')');
-            switch(data.type){
-                case 'Rooms': 
-                    return Object.assign({},state,{rooms:eval('('+data.content+')') });
+            const data = eval('(' + action.payload.message + ')');
+            switch (data.type) {
+                case 'Rooms':
+                    return Object.assign({}, state, {rooms: eval('(' + data.content + ')')});
                 case 'USERINFO':
-                    var user=eval('('+data.content+')');
-                    return Object.assign({},state,{roomID:user.roomID,status:user.status,username:user.username,score:user.score });
+                    var user = eval('(' + data.content + ')');
+                    return Object.assign({}, state, {
+                        roomID: user.roomID,
+                        status: user.status,
+                        username: user.username,
+                        score: user.score
+                    });
                 case 'START':
-                    return Object.assign({},state,{Game_Status:2});
+                    return Object.assign({}, state, {Game_Status: 2});
                 case 'RoomInfo':
-                    var room=eval('('+data.content+')');
-                    console.log("RoomInfo",room);
-                    return Object.assign({},state,{roomInfo:room});
+                    var room = eval('(' + data.content + ')');
+                    console.log("RoomInfo", room);
+                    return Object.assign({}, state, {roomInfo: room});
             }
             return state;
         case 'REDUX_WEBSOCKET::CLOSED':
@@ -54,5 +59,5 @@ exports.reducer=(state=initState,action)=>{
         default:
             return state;
     }
-   
+
 };

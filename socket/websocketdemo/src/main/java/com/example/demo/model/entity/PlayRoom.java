@@ -1,7 +1,6 @@
 package com.example.demo.model.entity;
 
 
-
 import java.io.Serializable;
 import java.util.List;
 
@@ -14,7 +13,7 @@ public class PlayRoom implements Serializable {
     private List<Player> playerList; // 玩家列表
     private int maxScore;           // 该房间实时最高分数
     private Player winner;          // 该房间最终赢家
-    private int preNumber=0; //该房间已准备玩家数，默认为0
+    private int preNumber = 0; //该房间已准备玩家数，默认为0
 
 
     public long getRoomId() {
