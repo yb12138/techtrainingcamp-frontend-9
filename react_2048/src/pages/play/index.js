@@ -171,10 +171,10 @@ class Play extends React.Component {
         let start = null;
         switch (this.state.status) {
             case 0:
-                start = (<Button onClick={() => this.sendStart(this.props.roomID)}>准备</Button>)
+                start = (<button class="btn btn-2 btn-2i" onClick={() => this.sendStart(this.props.roomID)}>准备</button>)
                 break;
             case 1:
-                start = (<Button>已准备</Button>)
+                start = (<button class="btn btn-2 btn-2i">已准备</button>)
                 break;
         }
         const countstart = this.state.countstart;
@@ -193,7 +193,7 @@ class Play extends React.Component {
                     </Col>
 
                     <Col span={10} style={{textAlign: 'right'}}>
-                        <Button>退出房间</Button>
+                        <button className="btn btn-4 btn-4a icon-arrow-right">退出房间</button>
                     </Col>
                 </Row>
                 <Divider style={{margin: '15px 0 0 0'}}/>
