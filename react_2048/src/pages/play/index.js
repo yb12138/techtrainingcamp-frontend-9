@@ -73,7 +73,6 @@ class Play extends React.Component {
                     if (temp.isMove === 1) {
                         this.sendMessage(temp);
                     }
-
                     break;
                 case 'ArrowUp': //上
                     var temp = Rule.moveUp(this.state.current, this.state.merges, this.state.score);
@@ -163,18 +162,12 @@ class Play extends React.Component {
             default:break;
         }
         const countstart = this.state.countstart;
-        // let Countcomponent;
-        // if (countstart) {
-        //     Countcomponent = <CountDown hours={this.state.hours} seconds={this.state.seconds} minutes={this.state.minutes}/>;
-        // } else {
-        //     Countcomponent = <div>准备开始</div>;
-        // }
+
         return (
             <Layout className="layout" style={{height: '100%'}}>
                 <Row justify="center" align="middle">
                     <Col span={12} style={{marginTop: '15px'}}>
                         <h2 style={{textAlign: 'right', margin: '0'}}>{roomtitle}</h2>
-                        {/* <h4 style={{textAlign: 'right', margin: '0'}}>{Countcomponent}</h4> */}
                     </Col>
 
                     <Col span={10} style={{textAlign: 'right'}}>
@@ -204,7 +197,7 @@ class Play extends React.Component {
 
 }
 function sortScore(a,b){  
-    return a.score-b.score  
+    return b.score-a.score  
  }
 const mapStateToProps = (state) => {
 
