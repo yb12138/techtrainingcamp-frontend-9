@@ -11,11 +11,7 @@ import PlayerList from '../PlayerList';
 
 import {Divider} from 'antd';
 import CountDown from "../Clock/CountDown";
-<<<<<<< HEAD
 import { IdcardFilled } from '@ant-design/icons';
-=======
-import Clock from "../Clock/Clock";
->>>>>>> e548c1142444f073e11b5c6f7afe5d3d5a37e0e8
 
 
 class Play extends React.Component {
@@ -37,11 +33,7 @@ class Play extends React.Component {
             roomID: 0,
             rank: true,
             countstart: false,
-<<<<<<< HEAD
             seconds:0,
-=======
-            isOver: false
->>>>>>> e548c1142444f073e11b5c6f7afe5d3d5a37e0e8
         }
     }
     sendMessage(temp) {
@@ -67,13 +59,6 @@ class Play extends React.Component {
                 }
             )
         )
-    }
-
-    CheckIfOver(over) {
-        alert(over)
-        this.setState({
-            isOver: over
-        })
     }
 
     componentDidMount() {
@@ -106,18 +91,7 @@ class Play extends React.Component {
                 case 'ArrowDown':    //下
                     var temp = Rule.moveDown(this.state.current, this.state.merges, this.state.score);
                     if (temp.isMove === 1) {
-<<<<<<< HEAD
                         this.sendMessage(temp);
-=======
-                        store.dispatch(send({
-                            type: "UPLOAD",
-                            content: JSON.stringify({
-                                "roomID": this.props.roomID,
-                                "score": temp.score,
-                                "current": temp.squares
-                            })
-                        }));
->>>>>>> e548c1142444f073e11b5c6f7afe5d3d5a37e0e8
                     }
                     break;
                 default:
@@ -146,7 +120,6 @@ class Play extends React.Component {
         });
         squares = Rule.generateOneNumber(squares); //初始化随机生成两个数
         squares = Rule.generateOneNumber(squares);
-<<<<<<< HEAD
         this.setState(
             Object.assign({},this.state,{
                 current: squares,
@@ -160,26 +133,6 @@ class Play extends React.Component {
                 countstart: true
             })
             );
-=======
-        this.setState({
-            current: squares,
-            merges: Array(4).fill(0).map(_ => {
-                return new Array(4).fill(0)
-            }),
-            score: 0,
-            status: 2,
-            flag: 1,
-            isMove: 0,
-            countstart: true
-        });
-        // if (this.state.isOver === true) {
-        //     alert('2')
-        //     this.setState({
-        //             status: 0
-        //         }
-        //     )
-        // }
->>>>>>> e548c1142444f073e11b5c6f7afe5d3d5a37e0e8
     }
 
 
@@ -195,65 +148,37 @@ class Play extends React.Component {
         if (this.props.roomInfo && this.props.roomInfo.playerList) {
             otherplays = this.props.roomInfo.playerList; //排行榜
         }
-<<<<<<< HEAD
         otherplays.sort(sortScore);
-=======
-
->>>>>>> e548c1142444f073e11b5c6f7afe5d3d5a37e0e8
         if (this.props.Game_Status === 2 && this.state.flag === 0) {
             this.startGame();
         }
         let start = null;
         switch (this.state.status) {
             case 0:
-                start = (<button class="btn btn-2 btn-2i" onClick={() => this.sendStart(this.props.roomID)}>准备</button>)
+                start = (<Button onClick={() => this.sendStart(this.props.roomID)}>准备</Button>)
                 break;
             case 1:
-                start = (<button class="btn btn-2 btn-2i">已准备</button>)
+                start = (<Button>已准备</Button>)
                 break;
             default:break;
         }
         const countstart = this.state.countstart;
-<<<<<<< HEAD
         // let Countcomponent;
         // if (countstart) {
         //     Countcomponent = <CountDown hours={this.state.hours} seconds={this.state.seconds} minutes={this.state.minutes}/>;
         // } else {
         //     Countcomponent = <div>准备开始</div>;
         // }
-=======
-        let Countcomponent;
-        if (countstart) {
-            Countcomponent = <Clock isOver={this.state.isOver} passValue={(over) => {
-                this.CheckIfOver(over)
-            }}/>
-        } else {
-            Countcomponent = <div>准备开始</div>;
-        }
-
->>>>>>> e548c1142444f073e11b5c6f7afe5d3d5a37e0e8
         return (
             <Layout className="layout" style={{height: '100%'}}>
                 <Row justify="center" align="middle">
                     <Col span={12} style={{marginTop: '15px'}}>
-<<<<<<< HEAD
                         <h2 style={{textAlign: 'right', margin: '0'}}>{roomtitle}</h2>
                         {/* <h4 style={{textAlign: 'right', margin: '0'}}>{Countcomponent}</h4> */}
                     </Col>
-=======
-                        <h2 style={{textAlign: 'right', margin: '0'}}>
-                            <button className={"btn btn-3 btn-3b icon-star-2"} >{roomtitle}</button></h2>
->>>>>>> e548c1142444f073e11b5c6f7afe5d3d5a37e0e8
 
-                    </Col>
-                    <h4 style={{textAlign: 'right', margin: '0'}}>{Countcomponent}</h4>
                     <Col span={10} style={{textAlign: 'right'}}>
-<<<<<<< HEAD
                         <Button onClick={()=>{this.exitGame(this.props.history)}}>退出房间</Button>
-=======
-                        <button className="btn btn-4 btn-4a icon-arrow-right">退出房间</button>
-                        <h2>{this.state.status}</h2>
->>>>>>> e548c1142444f073e11b5c6f7afe5d3d5a37e0e8
                     </Col>
                 </Row>
                 <Divider style={{margin: '15px 0 0 0'}}/>
@@ -268,9 +193,12 @@ class Play extends React.Component {
                             <Board current={this.state.current} score={this.state.score}/>
                             {start}
                         </Col>
+
                     </Row>
                 </Content>
             </Layout>
+
+
         )
     }
 
