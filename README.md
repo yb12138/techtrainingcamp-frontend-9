@@ -1,1 +1,0 @@
-# techtrainingcamp-frontend-9

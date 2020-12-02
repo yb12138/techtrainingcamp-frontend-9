@@ -23,7 +23,10 @@ class Home extends React.Component {
     render() {
         const status = this.props.status;
         if (status === "IN_GAME") {
+<<<<<<< HEAD
             console.log("出发了");
+=======
+>>>>>>> e548c1142444f073e11b5c6f7afe5d3d5a37e0e8
             this.props.history.push('/play');
             
         }
