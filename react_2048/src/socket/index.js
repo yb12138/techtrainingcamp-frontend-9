@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-11-24 12:24:00
- * @LastEditTime: 2020-11-26 01:24:56
+ * @LastEditTime: 2020-12-03 21:21:17
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \undefinedc:\junfan\demo8\2048_demo\src\socket.js
@@ -64,7 +64,6 @@ module.exports = class webSocket {
     // 关闭连接触发
     onclose = (e) => {
         this.isSucces = true   //关闭将标识符改为true
-        console.log('关闭socket收到的数据');
         let {socketClose} = this.param;
         socketClose && socketClose(e);
         // 根据后端返回的状态码做操作

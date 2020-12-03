@@ -15,7 +15,6 @@ import Count from '../Count/index'
 class Play extends React.Component {
     constructor(props) {
         super(props);
-        console.log("Board 初始化", props);
         let squares = Array(4).fill(0).map(_ => {
             return new Array(4).fill(0)
         });
@@ -63,6 +62,10 @@ class Play extends React.Component {
 
     componentDidMount() {
         document.addEventListener('keydown', this.keyDoneEvent)
+    }
+
+    onRef=(ref)=>{
+        this.child=ref;
     }
     keyDoneEvent=(e)=>{
         console.log(e.key);
@@ -138,6 +141,8 @@ class Play extends React.Component {
                 countstart: true
             })
             );
+            this.child.startGame();
+        
     }
     getState = ()=>{
         this.setState(Object.assign({},this.state,{status:-1,isOver:true}))
@@ -202,7 +207,7 @@ class Play extends React.Component {
                         <Col span={17}>
                             <Row align="top">
                                 <Col style={{textAlign:'right'}} span={24}>
-                                    <Count endTime={5000} gameOver={_this.getState} />
+                                    <Count onRef={this.onRef} endTime={6000} gameOver={_this.getState} />
                                 </Col>
                             </Row>
                             <Row align="top">
