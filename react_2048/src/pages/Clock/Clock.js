@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-12-02 16:55:49
- * @LastEditTime: 2020-12-03 16:29:05
+ * @LastEditTime: 2020-12-03 21:46:46
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \src\pages\Clock\Clock.js
@@ -43,6 +43,7 @@ class Clock3 extends React.Component {
     }
 
     handleClose = () => {
+        console.log('bb');
         let { open } = this.state.open
         this.setState({
             open: false

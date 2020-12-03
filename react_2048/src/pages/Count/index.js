@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-12-03 15:24:20
- * @LastEditTime: 2020-12-03 16:53:59
+ * @LastEditTime: 2020-12-03 21:47:37
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \src\pages\Count\index.js
@@ -19,11 +19,13 @@ export default class countDown extends Component {
       second: 0
     }
   }
-  componentDidMount() {
-      
+  componentDidMount(){
+    this.props.onRef(this)
+}
+  startGame(){
     if(this.props.endTime){
-      this.countFun(this.props.endTime);
-    }
+        this.countFun(this.props.endTime);
+      }
   }
   //组件卸载取消倒计时
   componentWillUnmount(){
@@ -37,7 +39,7 @@ export default class countDown extends Component {
     let sys_second = time;
     this.timer = setInterval(() => {
     //防止倒计时出现负数
-      if (sys_second > 1000) {
+      if (sys_second >= 1000) {
         sys_second -= 1000;
         let minute = Math.floor((sys_second / 1000 / 60) % 60);
         let second = Math.floor(sys_second / 1000 % 60);
@@ -49,7 +51,9 @@ export default class countDown extends Component {
         clearInterval(this.timer);
         //倒计时结束时触发父组件的方法
         //this.$child.handleOpen();
-        this.props.gameOver();
+        //this.props.gameOver();
+        console.log('aa');
+        this.$child.handleOpen();
       }
     }, 1000);
   }
