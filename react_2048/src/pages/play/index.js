@@ -177,7 +177,7 @@ class Play extends React.Component {
         const countstart = this.state.countstart;
         let Countcomponent;
         if (countstart) {
-            Countcomponent = <Clock setParentState = {this.CheckIfOver} />
+            Countcomponent = <Clock  />
         } else {
             Countcomponent = <h3>准备开始</h3>;
         }
