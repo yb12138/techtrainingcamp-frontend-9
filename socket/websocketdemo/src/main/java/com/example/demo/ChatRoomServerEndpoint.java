@@ -26,13 +26,14 @@ import static com.example.demo.model.enums.StatusEnum.ONLINE;
 @ServerEndpoint("/chat-room/{username}")
 @RestController
 public class ChatRoomServerEndpoint {
+
     // 检测到客户端创建连接成功了，我需要将该客户端添加到我们集合中（就是存在在线会话的集合）
     @OnOpen
     public void openSession(@PathParam("username") String username,
                             Session session) {
-        Player user=WebSocketUtils.ONLINE_USER_SESSIONS.get(username);
-        if (user==null){
-            user=new Player();
+        Player user = WebSocketUtils.ONLINE_USER_SESSIONS.get(username);
+        if (user == null) {
+            user = new Player();
             user.setUsername(username);
             user.setStatus(ONLINE);
         }
@@ -43,49 +44,48 @@ public class ChatRoomServerEndpoint {
     }
 
     @OnMessage
-    public void onMessage(@PathParam("username") String username ,
-                          String message,Session session)
-    {
-        if (message!=null&&message.length()!=0){
-            PlayMessage playMessage=JSON.parseObject(message,PlayMessage.class);
-            JSONObject jsonObject=null;
-            if (playMessage.getContent()!=null){
-                String content=playMessage.getContent();
-                jsonObject=JSON.parseObject(content);
+    public void onMessage(@PathParam("username") String username,
+                          String message,Session session) {
+        if (message != null && message.length() != 0) {
+            PlayMessage playMessage = JSON.parseObject(message, PlayMessage.class);
+            JSONObject jsonObject = null;
+            if (playMessage.getContent() != null) {
+                String content = playMessage.getContent();
+                jsonObject = JSON.parseObject(content);
             }
-            switch (playMessage.getType()){
+            switch (playMessage.getType()) {
                 case VIEW_ROOM:
-                    WebSocketUtils.sendAllRoom(); //实时刷新房间状态
+                    WebSocketUtils.sendAllRoom();   //实时刷新房间状态
                     break;
                 case IN_ROOM:
-                    if(jsonObject!=null) {
+                    if (jsonObject != null) {
                         Long roomId = jsonObject.getLong("roomID");
                         WebSocketUtils.joinRoom(username, roomId);
                     }
                     break;
                 case Start:
-                    if(jsonObject!=null) {
+                    if (jsonObject != null) {
                         Long roomID = jsonObject.getLong("roomID");
-                        WebSocketUtils.startGame(roomID,username);
+                        WebSocketUtils.startGame(roomID, username);
                     }
                     break;
                 case UPLOAD:
-                    if (jsonObject!=null){
-                        JSONArray array=jsonObject.getJSONArray("current");
-                        int[][] current=new int[4][4];
-                        for (int i=0;i<array.size();i++){
-                            JSONArray jsonArray=array.getJSONArray(i);
-                            for (int j=0;j<jsonArray.size();j++){
-                                current[i][j]=jsonArray.getIntValue(j);
+                    if (jsonObject != null) {
+                        JSONArray array = jsonObject.getJSONArray("current");
+                        int[][] current = new int[4][4];
+                        for (int i = 0; i < array.size(); i++) {
+                            JSONArray jsonArray = array.getJSONArray(i);
+                            for (int j = 0; j < jsonArray.size(); j++) {
+                                current[i][j] = jsonArray.getIntValue(j);
                             }
                         }
-                        Double score=jsonObject.getDouble("score");
+                        Double score = jsonObject.getDouble("score");
                         Long roomID = jsonObject.getLong("roomID");
-                        WebSocketUtils.updateCurrent(username,current,score,roomID);
+                        WebSocketUtils.updateCurrent(username, current, score, roomID);
                     }
                     break;
                 case LEAVE:
-                        WebSocketUtils.exitGame(username);
+                    WebSocketUtils.exitGame(username);
                     break;
                 case GetInfo:
                     WebSocketUtils.sendUserInfo(username);
@@ -99,9 +99,8 @@ public class ChatRoomServerEndpoint {
     }
 
     @OnClose
-    public void onClose(@PathParam("username") String username ,
-                        Session session)
-    {
+    public void onClose(@PathParam("username") String username,
+                        Session session) {
         WebSocketUtils.ONLINE_USER_SESSIONS.remove(username);
         try {
             session.close();
@@ -118,4 +117,5 @@ public class ChatRoomServerEndpoint {
             e.printStackTrace();
         }
     }
+
 }

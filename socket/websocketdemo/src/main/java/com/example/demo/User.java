@@ -4,6 +4,7 @@ import javax.websocket.Session;
 import java.util.List;
 
 public class User {
+
     private String username;
     private int[][] current;
     private Session session;
@@ -31,4 +32,5 @@ public class User {
     public void setSession(Session session) {
         this.session = session;
     }
+
 }
