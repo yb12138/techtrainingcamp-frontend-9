@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-11-24 20:52:26
- * @LastEditTime: 2020-12-02 22:05:15
+ * @LastEditTime: 2020-12-03 15:06:58
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \src\pages\home\index.js
@@ -28,11 +28,10 @@ class Home extends React.Component {
 
     render() {
         const status = this.props.status;
-        if (status === "IN_GAME") {
-            console.log("出发了");
+        if (status === "IN_ROOM") {
+            
             this.props.history.push('/play'); 
         }
-        console.log("Home:", this.props);
         const rooms = this.props.rooms;
 
 

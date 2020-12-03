@@ -2,7 +2,7 @@
 * 
  * @Author: your name
  * @Date: 2020-11-24 21:21:12
- * @LastEditTime: 2020-11-27 10:31:56
+ * @LastEditTime: 2020-12-03 14:56:39
  * @LastEditors: Please set LastEditors
  * @Description: 全局状态管理，存储房间号，房间内用户信息，以及各用户当前棋盘
  * @FilePath: \src\reducer\index.js
@@ -43,7 +43,7 @@ exports.reducer = (state = initState, action) => {
                         roomID: user.roomID,
                         status: user.status,
                         username: user.username,
-                        score: user.score
+                        score: user.score,
                     });
                 case 'START':
                     return Object.assign({}, state, {Game_Status: 2});

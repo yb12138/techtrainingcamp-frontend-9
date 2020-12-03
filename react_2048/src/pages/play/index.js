@@ -8,11 +8,9 @@ import store from '../../store'
 import {Row, Col} from 'antd';
 import {Content} from 'antd/lib/layout/layout';
 import PlayerList from '../PlayerList';
-
 import {Divider} from 'antd';
-import CountDown from "../Clock/CountDown";
-import { IdcardFilled } from '@ant-design/icons';
-
+import Clock from "../Clock/Clock";
+import Count from '../Count/index'
 
 class Play extends React.Component {
     constructor(props) {
@@ -34,6 +32,8 @@ class Play extends React.Component {
             rank: true,
             countstart: false,
             seconds:0,
+            minutes: 0,
+            isOver: false
         }
     }
     sendMessage(temp) {
@@ -62,47 +62,49 @@ class Play extends React.Component {
     }
 
     componentDidMount() {
-        document.addEventListener('keydown', function (e) {//渲染完成后绑定键盘事件
-            console.log(e.key);
-            if (this.state.status < 1) {
-                return;
-            }
-            switch (e.key) {
-                case 'ArrowLeft':   //左
-                    var temp = Rule.moveLeft(this.state.current, this.state.merges, this.state.score);
-                    if (temp.isMove === 1) {
-                        this.sendMessage(temp);
-                    }
-                    break;
-                case 'ArrowUp': //上
-                    var temp = Rule.moveUp(this.state.current, this.state.merges, this.state.score);
-                    if (temp.isMove === 1) {
-                        this.sendMessage(temp);
-                    }
-                    break;
-                case 'ArrowRight': //右
-                    var temp = Rule.moveRight(this.state.current, this.state.merges, this.state.score);
-                    if (temp.isMove === 1) {
-                        this.sendMessage(temp);
-                    }
+        document.addEventListener('keydown', this.keyDoneEvent)
+    }
+    keyDoneEvent=(e)=>{
+        console.log(e.key);
+        if (this.state.status < 1) {
+            return;
+        }
+        switch (e.key) {
+            case 'ArrowLeft':   //左
+                var temp = Rule.moveLeft(this.state.current, this.state.merges, this.state.score);
+                if (temp.isMove === 1) {
+                    this.sendMessage(temp);
+                }
+                break;
+            case 'ArrowUp': //上
+                var temp = Rule.moveUp(this.state.current, this.state.merges, this.state.score);
+                if (temp.isMove === 1) {
+                    this.sendMessage(temp);
+                }
+                break;
+            case 'ArrowRight': //右
+                var temp = Rule.moveRight(this.state.current, this.state.merges, this.state.score);
+                if (temp.isMove === 1) {
+                    this.sendMessage(temp);
+                }
 
-                    break;
-                case 'ArrowDown':    //下
-                    var temp = Rule.moveDown(this.state.current, this.state.merges, this.state.score);
-                    if (temp.isMove === 1) {
-                        this.sendMessage(temp);
-                    }
-                    break;
-                default:
-                    break;
-            }
-        }.bind(this))
+                break;
+            case 'ArrowDown':    //下
+                var temp = Rule.moveDown(this.state.current, this.state.merges, this.state.score);
+                if (temp.isMove === 1) {
+                    this.sendMessage(temp);
+                }
+                break;
+            default:
+                break;
+        }
     }
     
 
     //点击
     sendStart(val) {
         store.dispatch(send({type: "Start", content: JSON.stringify({"roomID": val})}));
+        this.setState(Object.assign({},this.state,{status:1}))
     }
 
     getInfo(){
@@ -111,6 +113,10 @@ class Play extends React.Component {
 
     exitGame(){
         store.dispatch(send({type:"LEAVE"}));
+    }
+    gameOver(){
+        this.setState(Object.assign({},this.state,{status:-1,isOver:true}));
+        document.removeEventListener('keydown',this.keyDoneEvent);
     }
 
     startGame() {
@@ -133,35 +139,47 @@ class Play extends React.Component {
             })
             );
     }
+    getState = ()=>{
+        this.setState(Object.assign({},this.state,{status:-1,isOver:true}))
+    }
 
 
     render() {
-        console.log("准备");
         //离开房间
         if(this.props.status==="ONLINE"){
             this.props.history.push('/home');
         }
-        console.log(this.props);
         const roomtitle = "欢迎来到" + this.props.roomID + "号房间";
         let otherplays = [];
-        if (this.props.roomInfo && this.props.roomInfo.playerList) {
-            otherplays = this.props.roomInfo.playerList; //排行榜
+        let roomInfo=this.props.roomInfo;
+        let rooms=this.props.rooms;
+        if(!roomInfo){
+            rooms.forEach(element => {
+                if(element.roomId===this.props.roomID){
+                roomInfo=element;
+                }
+            });
+        }
+
+        if (roomInfo && roomInfo.playerList) {
+            otherplays = roomInfo.playerList; //排行榜
         }
         otherplays.sort(sortScore);
         if (this.props.Game_Status === 2 && this.state.flag === 0) {
             this.startGame();
         }
+        let level=roomInfo.actualPlayerNumber-roomInfo.preNumber;
         let start = null;
         switch (this.state.status) {
             case 0:
-                start = (<Button onClick={() => this.sendStart(this.props.roomID)}>准备</Button>)
+                start = (<Button style={{margin:'auto'}} onClick={() => this.sendStart(this.props.roomID)}>准备</Button>)
                 break;
             case 1:
-                start = (<Button>已准备</Button>)
+        start = (<div style={{margin:'auto'}}>已准备,尚有{level}位玩家未准备</div>)
                 break;
             default:break;
         }
-        const countstart = this.state.countstart;
+        const _this = this;
 
         return (
             <Layout className="layout" style={{height: '100%'}}>
@@ -169,7 +187,6 @@ class Play extends React.Component {
                     <Col span={12} style={{marginTop: '15px'}}>
                         <h2 style={{textAlign: 'right', margin: '0'}}>{roomtitle}</h2>
                     </Col>
-
                     <Col span={10} style={{textAlign: 'right'}}>
                         <Button onClick={()=>{this.exitGame(this.props.history)}}>退出房间</Button>
                     </Col>
@@ -183,8 +200,17 @@ class Play extends React.Component {
                         </Col>
                         <Divider type="vertical" style={{'height': '100%'}}/>
                         <Col span={17}>
+                            <Row align="top">
+                                <Col style={{textAlign:'right'}} span={24}>
+                                    <Count endTime={5000} gameOver={_this.getState} />
+                                </Col>
+                            </Row>
+                            <Row align="top">
+                            <Col span={24}>
                             <Board current={this.state.current} score={this.state.score}/>
                             {start}
+                            </Col>
+                            </Row>
                         </Col>
 
                     </Row>

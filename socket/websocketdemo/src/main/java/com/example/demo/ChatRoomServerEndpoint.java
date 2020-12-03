@@ -66,7 +66,7 @@ public class ChatRoomServerEndpoint {
                 case Start:
                     if(jsonObject!=null) {
                         Long roomID = jsonObject.getLong("roomID");
-                        WebSocketUtils.startGame(roomID);
+                        WebSocketUtils.startGame(roomID,username);
                     }
                     break;
                 case UPLOAD:
@@ -89,6 +89,9 @@ public class ChatRoomServerEndpoint {
                     break;
                 case GetInfo:
                     WebSocketUtils.sendUserInfo(username);
+                    break;
+                case Add_Room:
+                    WebSocketUtils.addRoom();
                     break;
                 default:
             }

@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 import javax.websocket.RemoteEndpoint;
 import javax.websocket.Session;
 
-import static com.example.demo.model.enums.StatusEnum.IN_GAME;
+import static com.example.demo.model.enums.StatusEnum.*;
 
 public class WebSocketUtils {
     // 创建一个集合，里面存放所有的在线用户
@@ -87,7 +87,7 @@ public class WebSocketUtils {
                             return ;  //该用户断线重连，无需操作
                         }
                     }
-                    user.setStatus(IN_GAME);
+                    user.setStatus(IN_ROOM);
                     user.setCurrent(new int[4][4]);
                     user.setScore(0.0);
                     user.setRoomID(RoomID);
@@ -130,22 +130,42 @@ public class WebSocketUtils {
 
     }
 
-    public static void startGame(Long roomID) {
+    public static void startGame(Long roomID, String username) {
+        Player player=ONLINE_USER_SESSIONS.get(username);
         List<PlayRoom> playRoomList=rooms.stream().filter(item->item.getRoomId()==roomID).collect(Collectors.toList());
         if (playRoomList.size() == 1){
             PlayRoom playRoom=playRoomList.get(0);
+            List<Player> players=playRoom.getPlayerList();
             int oldcount=playRoom.getPreNumber();
-            int playersize=playRoom.getPlayerList().size();
+            int playersize=players.size();
+            int actualnumber=playRoom.getActualPlayerNumber();
+            int maxnumber=playRoom.getMaxPlayerNumber();
             if(oldcount+1==playersize){
                 //房间内所有人都已经准备就绪，开始游戏
                 Result result=new Result(Result.Type.START,null);
                 String resultstr=JSON.toJSONString(result);
-                for (Player player:playRoom.getPlayerList()){
-                    Session session=player.getSession();
+                for (Player temp:players){
+                    Session session=temp.getSession();
+                    temp.setStatus(PLAYING); //修改所有人状态为开始游戏
                     sendMessage(session,resultstr);
+                    ONLINE_USER_SESSIONS.get(temp.getUsername()).setStatus(PLAYING);
+                }
+                playRoom.setStatus(2);
+            }else if(oldcount+1<playersize) {
+                playRoom.setPreNumber(oldcount+1);
+                for (Player temp:players){
+                    if (temp.getUsername().equals(username)){
+                        temp.setStatus(PRE); //修改房主状态为待准备
+                        player.setStatus(PRE);
+                    }
                 }
             }
-            playRoom.setPreNumber(oldcount+1);
+            //设置房间实际在线人数，+1
+            if(actualnumber+1<=maxnumber){
+                playRoom.setActualPlayerNumber(actualnumber+1);
+            }
+            sendAllRoom();
+
         }
     }
 
@@ -208,6 +228,7 @@ public class WebSocketUtils {
         temp.setMaxPlayerNumber(playRoom.getMaxPlayerNumber());
         temp.setWinner(playRoom.getWinner());
         temp.setMaxScore(playRoom.getMaxScore());
+        temp.setStatus(playRoom.getStatus());
         temp.setActualPlayerNumber(playRoom.getActualPlayerNumber());
     }
 
@@ -217,17 +238,34 @@ public class WebSocketUtils {
             return;
         }
         List<PlayRoom> playRoomList=rooms.stream().filter(item->item.getRoomId()==playRoom.getRoomId()).collect(Collectors.toList());
-        List<Player> players=playRoomList.get(0).getPlayerList();
-        players.removeIf(player -> player.getUsername().equals(username));
+        PlayRoom playRoom1=playRoomList.get(0);
+        playRoom1.setActualPlayerNumber(playRoom1.getActualPlayerNumber()-1);
+        int status=playRoom1.getStatus();
+        playRoom1.setStatus(status==1?0:status);
+        List<Player> players=playRoom1.getPlayerList();
+        Iterator<Player> iterable=players.iterator();
+        while (iterable.hasNext()){
+            Player player=iterable.next();
+            if(player.getUsername().equals(username)){
+                if(player.getStatus().equals(PRE)){
+                    playRoom1.setPreNumber(playRoom1.getPreNumber()-1);
+                }
+                iterable.remove();
+            }
+
+
+        }
         ONLINE_USER_ROOMS.remove(username);
         Player player=ONLINE_USER_SESSIONS.get(username);
-        player.setStatus(StatusEnum.ONLINE);
+        player.setStatus(ONLINE);
         player.setRoomID(0);
         player.setCurrent(null);
         player.setScore(0);
         sendUserInfo(player);
         sendAllRoom();
     }
+
+
 
     public static void sendUserInfo(String username) {
         Player player=ONLINE_USER_SESSIONS.get(username);
@@ -242,5 +280,20 @@ public class WebSocketUtils {
         Result result=new Result(Result.Type.TempInfo,null);
 
 
+    }
+
+    public static void addRoom() {
+        PlayRoom playRoom=new PlayRoom();
+        long id=1001;
+        int size=rooms.size();
+        playRoom.setRoomId(id+size+1);
+        playRoom.setMaxScore(0);
+        playRoom.setWinner(null);
+        playRoom.setMaxPlayerNumber(5);
+        playRoom.setPlayerList(new ArrayList<>());
+        playRoom.setActualPlayerNumber(0);
+        playRoom.setPreNumber(0);
+        rooms.add(playRoom);
+        sendAllRoom();
     }
 }
