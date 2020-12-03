@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-11-25 17:25:27
- * @LastEditTime: 2020-12-02 16:34:46
+ * @LastEditTime: 2020-12-03 14:51:48
  * @LastEditors: Please set LastEditors
  * @Description: 房间组件，一个房间四个人
  * @FilePath: \src\pages\Room\index.js
@@ -27,8 +27,7 @@ export default class Room extends React.Component {
         const room = this.props.room;
         const lists = room.playerList;
         const roomtitle = "房间号:" + room.roomId;
-        const leve = room.maxPlayerNumber - lists.length;
-        const inRomm = (!leve == 0) ? (
+        const inRomm = (room.status === 0) ? (
             <div style={{textAlign: 'center'}}><Button onClick={() => this.joinRoom(room.roomId)}>加入房间</Button>
             </div>) : (<div style={{textAlign: 'center'}}><Button>围观</Button></div>)
 
@@ -43,7 +42,7 @@ export default class Room extends React.Component {
                             avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"/>}
                             title={<a href="https://ant.design">{item.username}</a>}
 
-                            description={"当前分数"+item.score}
+                            description={item.status==='IN_ROOM'?'未准备':(item.status==='PRE'?'已准备':'游戏中,当前分数为'+item.score)}
                         />
                     </List.Item>
                 )}

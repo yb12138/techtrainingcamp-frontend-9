@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-12-02 10:17:48
- * @LastEditTime: 2020-12-02 16:47:41
+ * @LastEditTime: 2020-12-02 20:53:46
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \src\pages\PlayerList\index.js

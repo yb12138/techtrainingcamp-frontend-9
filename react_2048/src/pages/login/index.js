@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-11-25 23:38:32
- * @LastEditTime: 2020-12-02 16:39:35
+ * @LastEditTime: 2020-12-02 22:11:33
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \src\login\index.js
@@ -12,6 +12,7 @@ import store from '../../store'
 import {connect} from '@giantmachines/redux-websocket';
 import Home from '../home';
 import '../login/login.css'
+import { Button} from 'antd';
 
 export default class Login extends React.Component {
     constructor(props) {
@@ -43,9 +44,9 @@ export default class Login extends React.Component {
                         username: e.target.value,
                     });
                 }} />
-                    <button className="btn-submit" type="submit" onClick={this.handleClick}>
+                    <Button className="btn-submit" type="submit" onClick={this.handleClick}>
                     开始游戏
-                    </button>
+                    </Button>
                 </div>      
                 </form>
                 </div>

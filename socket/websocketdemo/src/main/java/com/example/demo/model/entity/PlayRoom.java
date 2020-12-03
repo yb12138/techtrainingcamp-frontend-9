@@ -14,7 +14,15 @@ public class PlayRoom implements Serializable {
     private int maxScore;           // 该房间实时最高分数
     private Player winner;          // 该房间最终赢家
     private int preNumber = 0; //该房间已准备玩家数，默认为0
+    private int status=0; //0为空闲中,1为已满员,2为正在游戏中
 
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
 
     public long getRoomId() {
         return roomId;

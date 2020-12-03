@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-11-27 10:41:59
- * @LastEditTime: 2020-11-27 10:41:59
+ * @LastEditTime: 2020-12-02 20:55:49
  * @LastEditors: Please set LastEditors
  * @Description: 游戏盘组件，仅显示数据
  * @FilePath: \src\pages\play\index.js
@@ -36,7 +36,7 @@ export default class Board extends React.Component {
     render() {
 
         return (
-            <div className="main">
+            <div className="main" style={{marginTop:'50px'}}>
                 <header>
                     <h1>当前分数{this.props.score}</h1>
                 </header>
